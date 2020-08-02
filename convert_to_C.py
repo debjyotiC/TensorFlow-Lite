@@ -16,9 +16,6 @@ def hex_to_c_array(hex_data, var_name):
     c_str += '#ifndef ' + var_name.upper() + '_H\n'
     c_str += '#define ' + var_name.upper() + '_H\n\n'
 
-    # Add array length at top of file
-    c_str += '\nunsigned int ' + var_name + '_len = ' + str(len(hex_data)) + ';\n'
-
     # Declare C variable
     c_str += 'unsigned char ' + var_name + '[] = {'
     hex_array = []
@@ -31,18 +28,21 @@ def hex_to_c_array(hex_data, var_name):
         if (i + 1) < len(hex_data):
             hex_str += ','
         if (i + 1) % 12 == 0:
-            hex_str += '\n '
+            hex_str += '\n'
         hex_array.append(hex_str)
 
     # Add closing brace
     c_str += '\n ' + format(' '.join(hex_array)) + '\n};\n\n'
 
+    # Add array length at bottom of file
+    c_str += '\nunsigned int ' + var_name + '_len = ' + str(len(hex_data)) + ';\n'
+
     # Close out header guard
-    c_str += '#endif //' + var_name.upper() + '_H'
+    c_str += '#endif ' + var_name.upper() + '_H'
 
     return c_str
 
 
 # Write TFLite model to a C source (or header) file
-with open('model_save/C_model/c_model_name' + '.h', 'w') as file:
-    file.write(hex_to_c_array(tflite_model, 'model_save/C_model/c_to_f_model'))
+with open('model_save/C_model/c_to_f_model' + '.h', 'w') as file:
+    file.write(hex_to_c_array(tflite_model, 'c_to_f_model'))
