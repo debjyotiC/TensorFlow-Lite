@@ -1,5 +1,5 @@
 # TensorFlow-Lite
-This repo contains code for test with TF Lite on ESP 8266/32
+This repo contains code for test with TF Lite on ESP32
 
 # EloquentTinyML
 
